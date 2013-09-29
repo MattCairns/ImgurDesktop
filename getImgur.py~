@@ -1,0 +1,42 @@
+import requests
+import json
+import random
+import time
+from gi.repository import Gio
+
+CLIENT_ID = '595bfbaa3f15b2e'
+CLIENT_SECRET = '089e4850e2c4e0a286d64d7425fad89d14c39686'
+
+
+def get_urls(subreddit):
+	url = 'https://api.imgur.com/3/gallery/r/%s/' % subreddit
+	print url
+	headers = {'Content-Type': 'text', 'Authorization': 'Client-ID %s' % CLIENT_ID}
+	print headers
+	try:
+		subreddit_data = requests.get(url, headers=headers, verify=False)
+	except:
+		return "error"
+
+	subreddit_data = subreddit_data.json()
+
+	urls = []
+	for d in subreddit_data['data']:
+		urls.append(d['link'])
+
+	return urls
+
+time.sleep(5)
+
+r = requests.get(random.choice(get_urls('wallpapers')), stream=True)
+with open('/home/matt/imgurdesktop/desktop.jpg', 'w') as f:
+	print f
+	try:
+		f.write(r.content)
+		f.close()
+	except:
+		print "fuck"
+
+
+settings = Gio.Settings.new('org.gnome.desktop.background')
+settings.set_string('picture-uri', 'file:///home/matt/desktop.jpg')
