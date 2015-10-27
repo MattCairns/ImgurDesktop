@@ -26,7 +26,7 @@ def get_urls(subreddit):
 
 time.sleep(5)
 
-r = requests.get(random.choice(get_urls('wallpapers')), stream=True)
+r = requests.get(random.choice(get_urls('desktops')), stream=True)
 with open('/home/matt/ImgurDesktop/desktop.jpg', 'w') as f:
 	print f
 	try:
