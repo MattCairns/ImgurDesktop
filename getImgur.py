@@ -4,6 +4,7 @@ import random
 import time
 import settings
 from gi.repository import Gio
+from os.path import expanduser
 
 
 def get_urls(subreddit):
@@ -26,8 +27,8 @@ def get_urls(subreddit):
 
 time.sleep(5)
 
-r = requests.get(random.choice(get_urls('desktops')), stream=True)
-with open('/home/matt/ImgurDesktop/desktop.jpg', 'w') as f:
+r = requests.get(random.choice(get_urls('wallpapers')), stream=True)
+with open('desktop.jpg', 'w') as f:
 	print f
 	try:
 		f.write(r.content)
@@ -37,4 +38,4 @@ with open('/home/matt/ImgurDesktop/desktop.jpg', 'w') as f:
 
 
 settings = Gio.Settings.new('org.gnome.desktop.background')
-settings.set_string('picture-uri', 'file:///home/matt/ImgurDesktop/desktop.jpg')
+settings.set_string('picture-uri', expanduser("~/ImgurDesktop/desktop.jpg"))
